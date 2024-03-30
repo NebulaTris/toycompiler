@@ -2,7 +2,7 @@
 using namespace std; 
   
 // Function to return sum 
-int addTwoNumber(int A, int B) 
+int addTwoNumbers(int A, int B) 
 { 
     // Return sum of A and B 
     return A - (-B); 
@@ -15,6 +15,6 @@ int main()
     int A = 4, B = 11; 
   
     // Function call 
-    cout << "sum = " << addTwoNumber(A, B); 
+    cout << "sum = " << addTwoNumbers(A, B); 
     return 0; 
 }

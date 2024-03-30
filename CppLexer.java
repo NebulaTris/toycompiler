@@ -1,14 +1,12 @@
-package CppLexer;
-
-import java.io.BufferedWriter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
 
 public class CppLexer {
     
@@ -56,20 +54,52 @@ public class CppLexer {
 
     private static List<Token> tokenizeLine(String line, int lineNumber) {
         List<Token> tokens = new ArrayList<>();
-        String[] words = line.split("\\s+");
+        String[] words = line.split("\\s+|(?=[{}(),;])|(?<=[{}(),;])"); // Split by spaces and special characters
+        boolean inFunctionDeclaration = false;
+        boolean inComment = false;
+        String functionName = "";
         for (String word : words) {
-            if (isKeyword(word)) {
-                tokens.add(new Token(TokenType.KEYWORD, word, lineNumber));
-            } else if (isIdentifier(word)) {
-                tokens.add(new Token(TokenType.IDENTIFIER, word, lineNumber));
-            } else if (isOperator(word)) {
-                tokens.add(new Token(TokenType.OPERATOR, word, lineNumber));
-            } else if (isLiteral(word)) {
-                tokens.add(new Token(TokenType.LITERAL, word, lineNumber));
-            } else if (isComment(word)) {
-                tokens.add(new Token(TokenType.COMMENT, word, lineNumber));
-            } else {
-                tokens.add(new Token(TokenType.UNKNOWN, word, lineNumber));
+            word = word.trim(); // Remove leading/trailing spaces
+            if (!word.isEmpty()) { // Skip empty tokens
+                if (isComment(word)) {
+                    inComment = true;
+                }
+                if (!inComment) {
+                    if (word.equals("/*")) {
+                        inComment = true;
+                    } else if (word.equals("*/")) {
+                        inComment = false;
+                    }
+                    if (isKeyword(word)) {
+                        if (word.equals("int") || word.equals("float")) {
+                            inFunctionDeclaration = false;
+                        }
+                        tokens.add(new Token(TokenType.KEYWORD, word, lineNumber));
+                    } else if (isIdentifier(word)) {
+                        if (inFunctionDeclaration) {
+                            functionName = word;
+                        } else {
+                            tokens.add(new Token(TokenType.IDENTIFIER, word, lineNumber));
+                        }
+                    } else if (isOperator(word)) {
+                        tokens.add(new Token(TokenType.OPERATOR, word, lineNumber));
+                    } else if (isLiteral(word)) {
+                        tokens.add(new Token(TokenType.LITERAL, word, lineNumber));
+                    }
+                    if (word.equals("{")) {
+                        inFunctionDeclaration = false;
+                    } else if (word.equals("(")) {
+                        inFunctionDeclaration = true;
+                        if (!functionName.isEmpty()) {
+                            tokens.add(new Token(TokenType.FUNCTION_NAME, functionName, lineNumber));
+                            functionName = "";
+                        }
+                    } else if (word.equals(")")) {
+                        inFunctionDeclaration = false;
+                    }
+                } else if (inComment) {
+                    tokens.add(new Token(TokenType.COMMENT, word, lineNumber));
+                }
             }
         }
         return tokens;
@@ -124,7 +154,7 @@ public class CppLexer {
     }
 
     private enum TokenType {
-        KEYWORD, IDENTIFIER, OPERATOR, LITERAL, COMMENT, UNKNOWN
+        KEYWORD, IDENTIFIER, OPERATOR, LITERAL, COMMENT, FUNCTION_NAME
     }
 
     private static void writeTokensToFile(List<Token> tokens) throws IOException {
