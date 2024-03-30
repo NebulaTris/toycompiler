@@ -1,0 +1,49 @@
+Program 'Main ' declared at line 1
+Identifier 'using ' used at line 2
+Identifier 'namespace ' used at line 2
+Identifier 'std ' used at line 2
+Comment '// ' at line 4
+Comment 'Function ' at line 4
+Comment 'to ' at line 4
+Comment 'return ' at line 4
+Comment 'sum ' at line 4
+Keyword 'int ' used at line 5
+Identifier 'addTwoNumbers ' used at line 5
+Keyword 'int ' used at line 5
+Identifier 'A ' used at line 5
+Keyword 'int ' used at line 5
+Identifier 'B ' used at line 5
+Comment '// ' at line 7
+Comment 'Return ' at line 7
+Comment 'sum ' at line 7
+Comment 'of ' at line 7
+Comment 'A ' at line 7
+Comment 'and ' at line 7
+Comment 'B ' at line 7
+Keyword 'return ' used at line 8
+Identifier 'A ' used at line 8
+Operator '- ' used at line 8
+Comment '// ' at line 11
+Comment 'Driver ' at line 11
+Comment 'Code ' at line 11
+Keyword 'int ' used at line 12
+Identifier 'main ' used at line 12
+Comment '// ' at line 14
+Comment 'Given ' at line 14
+Comment 'two ' at line 14
+Comment 'number ' at line 14
+Keyword 'int ' used at line 15
+Identifier 'A ' used at line 15
+Operator '= ' used at line 15
+Literal '4 ' used at line 15
+Identifier 'B ' used at line 15
+Operator '= ' used at line 15
+Literal '11 ' used at line 15
+Comment '// ' at line 17
+Comment 'Function ' at line 17
+Comment 'call ' at line 17
+Identifier 'cout ' used at line 18
+Operator '= ' used at line 18
+Identifier 'addTwoNumbers ' used at line 18
+Keyword 'return ' used at line 19
+Literal '0 ' used at line 19
