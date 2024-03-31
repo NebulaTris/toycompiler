@@ -1,0 +1,6 @@
+MOV R1, -11
+MOV T1, R1
+MOV R1, 15
+MOV result, R1
+MOV R1, result
+MOV result, R1
