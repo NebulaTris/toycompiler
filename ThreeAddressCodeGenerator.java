@@ -7,7 +7,7 @@ public class ThreeAddressCodeGenerator {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(new File("OutputLO"));
-            FileWriter fileWriter = new FileWriter("OTC");
+            FileWriter fileWriter = new FileWriter("OutputThreeCode");
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
